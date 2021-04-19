@@ -17,21 +17,79 @@ import {
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import firestore from '@react-native-firebase/firestore';
 
-const GameBoard = props => {
-  const [board, setBoard] = useState(
-    ['','','','','','','','','']
-  );
-  const [playerTurn, setPlayerTurn] = useState("x");
-  const [clicked, setClicked] = useState(false);
+  // Empty = 0
+  // Player 1 (X) = 1
+  // Player 2 (O) = 2
 
   // X Icon Name = "close"
   // o Icon Name = "RadioButtonUnchecked"
+
+
+const GameBoardTicTacToe = () => {
+  const [boardState, setBoard] = useState(
+    [
+      [0,0,0,],
+      [0,0,0,],
+      [0,0,0,],
+    ]);
+  const [playerTurn, setPlayerTurn] = useState(1);
+  const [clicked, setClicked] = useState(false);
+
+  const startGame = () => {
+    setBoard(
+      [
+        [0,0,0,],
+        [0,0,0,],
+        [0,0,0,],
+      ]
+    )
+  };
+
+  const squareClicked = (row, col) => {
+    var playerTurn = {playerTurn}
+
+    if (row == 0 && col == 0){
+      setBoard[        
+        [1,0,0,],
+        [0,0,0,],
+        [0,0,0,]
+      ]
+    } 
+
+    //var arr = setBoard.slice()
+    //list[row, col] = playerTurn
+    //setBoard(list)
+
+    //setBoard = playerTurn
+
+    //setPlayerTurn((playerTurn == 1) ? 2 : 1);
+    
+    //if (playerTurn ==1){
+      //setBoard(row, col)
+    //}
+    
+    //setClicked[true];
+  }
+
+  const placeIcon = (row, col) => {
+    var move = boardState[row][col]
+
+    if(move == 1){
+      return <Icon name="close" style={styles.xTile}/>;
+    } else if(move == 2){
+      return <Icon name="error" style={styles.oTile}/>;
+    } else {
+      return <View />;
+    }
+
+  }
+
 
   useEffect(() => {
 
     console.log("gameBoard mounted");
 
-    startGame()
+    startGame()    
 
     return async() => {
 
@@ -41,33 +99,11 @@ const GameBoard = props => {
 
   }, []);
 
-  const startGame = () => {
-    setBoard(
-      ['','','','','','','','','']
-    )
-  };
+
   
-  const squareClicked = (index) => {
-    //var currentPlayer
-
-    setClicked[true];
-
-    setPlayerTurn((playerTurn == "x") ? "o" : "x");
-    console.log(playerTurn)
 
 
-  }
 
-  const putIcon = (index) => {
-    if(playerTurn == "x"){
-      return <Icon name="close" style={styles.xTile}/>;
-    } else if(playerTurn == "o"){
-      return <Icon name="error" style={styles.oTile}/>;
-    } else {
-      return <View />;
-    }
-
-  }
 
     //to check if player has won game
     const checkIfWon = () => {
@@ -94,45 +130,45 @@ const GameBoard = props => {
         }
       }
     }
-
-
+  
+  
 
   return (
       <SafeAreaView style={{alignItems: 'center', justifyContent: 'center'}}>
         
         <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
-          <TouchableOpacity style={styles.tile} onPress={() => squareClicked(0)}>
-            {putIcon(0)}
+          <TouchableOpacity style={styles.tile} onPress={() => squareClicked(0, 0)}>
+            {placeIcon(0, 0)}
           </TouchableOpacity>
-          <TouchableOpacity style={styles.tile} onPress={() => squareClicked(1)}>
-            {putIcon(1)}
+          <TouchableOpacity style={styles.tile} onPress={() => squareClicked(0, 1)}>
+            {placeIcon(0, 1)}
           </TouchableOpacity>
-          <TouchableOpacity style={styles.tile} onPress={() => squareClicked(2)}>
-            {putIcon(2)}
-          </TouchableOpacity>
-        </View>
-
-        <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
-          <TouchableOpacity style={styles.tile} onPress={() => squareClicked(3)}>
-            {putIcon(3)}
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.tile} onPress={() => squareClicked(4)}>
-            {putIcon(4)}
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.tile} onPress={() => squareClicked(5)}>
-            {putIcon(5)}
+          <TouchableOpacity style={styles.tile} onPress={() => squareClicked(0, 2)}>
+            {placeIcon(0, 2)}
           </TouchableOpacity>
         </View>
 
         <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
-          <TouchableOpacity style={styles.tile} onPress={() => squareClicked(6)}>
-            {putIcon(6)}
+          <TouchableOpacity style={styles.tile} onPress={() => squareClicked(1, 0)}>
+            {placeIcon(1, 0)}
           </TouchableOpacity>
-          <TouchableOpacity style={styles.tile} onPress={() => squareClicked(7)}>
-            {putIcon(7)}
+          <TouchableOpacity style={styles.tile} onPress={() => squareClicked(1, 1)}>
+            {placeIcon(1, 1)}
           </TouchableOpacity>
-          <TouchableOpacity style={styles.tile} onPress={() => squareClicked(8)}>
-            {putIcon(8)}
+          <TouchableOpacity style={styles.tile} onPress={() => squareClicked(1, 2)}>
+            {placeIcon(1, 2)}
+          </TouchableOpacity>
+        </View>
+
+        <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
+          <TouchableOpacity style={styles.tile} onPress={() => squareClicked(2, 0)}>
+            {placeIcon(2, 0)}
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.tile} onPress={() => squareClicked(2, 1)}>
+            {placeIcon(2, 1)}
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.tile} onPress={() => squareClicked(2, 2)}>
+            {placeIcon(2, 2)}
           </TouchableOpacity>
         </View>
         <Text style={styles.someText}>It is player {playerTurn} 's turn!</Text>
@@ -160,6 +196,7 @@ const styles = StyleSheet.create({
   xTile: {
     color: '#000000',
     fontSize: 60,
+    flex: 1
   },
   
   oTile: {
@@ -169,10 +206,9 @@ const styles = StyleSheet.create({
 
   someText: {
     fontSize: 20,
-    
   }
 
 
 });
 
-export default GameBoard;
+export default GameBoardTicTacToe;

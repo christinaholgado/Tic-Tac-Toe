@@ -16,24 +16,30 @@ import {
   Platform
 } from 'react-native';
 
-import auth from '@react-native-firebase/auth';
-
-import Greeting from './components/greeting';
-import Registration from './components/registration';
-import LoginError from './components/login-error';
-import Login from './components/login';
-import ConfigureProfile from './components/configure-profile';
-import CreateOrJoin from './components/create-or-join';
 import firestore from '@react-native-firebase/firestore';
-import ChatRoom from './components/chat-room';
-import GameBoard from './components/game-board';
+import ConfigureProfile from './components/configure-profile';
 
-import Geolocation from "@react-native-community/geolocation";
+// Adding the opening screen
+import CreateOrJoinTicTacToe from './components/create-or-join-tic-tac-toe';
+
+// Adding the Game Board
+import GameBoardTicTacToe from './components/game-board-tic-tac-toe';
+
+// Adding the final screen
+//import FinalScreenTicTacToe from './components/final-screen-tic-tac-toe';
+
+import auth from '@react-native-firebase/auth';
+//import Greeting from './components/greeting';
+//import Registration from './components/registration';
+//import LoginError from './components/login-error';
+//import Login from './components/login';
+//import ChatRoom from './components/chat-room';
+//import Geolocation from "@react-native-community/geolocation";
 
 
 // Old code starts here
 const App: () => React$Node = () => {
-  const [currentScreen, setCurrentScreen] = useState('game-board');
+  const [currentScreen, setCurrentScreen] = useState('game-board-tic-tac-toe');
   const [initializing, setInitializing] = useState(true);
   const [user, setUser] = useState();
   const [error, setError] = useState({errorTitle: '', errorDescription: '', returnScreen: '' });
@@ -197,6 +203,7 @@ const App: () => React$Node = () => {
 
   //join a room with a given room code
   //write the joinRoom function here
+  // Change this to visit the game-board
   const joinRoom = thisRoomCode => {
     setRoomCode(thisRoomCode);
     firestore()
@@ -212,7 +219,7 @@ const App: () => React$Node = () => {
         uid: auth().currentUser.uid,
       })
       .then(() => {
-        setCurrentScreen('messages');
+        setCurrentScreen('game-board-tic-tac-toe');
       })
       .catch(error => {
         console.log(error)
@@ -233,11 +240,16 @@ const App: () => React$Node = () => {
     </>
   )*/
 
+  // Some Screens
+  //{ currentScreen === 'final-screen-tic-tac-toe' ? <FinalScreen updateScreen={updateScreen} /> : null }
+
+
   return (
     <>
       <StatusBar barStyle="dark-content" />
       <SafeAreaView>
-        { currentScreen === 'game-board' ? <GameBoard updateScreen={updateScreen} /> : null }
+        { currentScreen === 'create-or-join-tic-tac-toe' ? <CreateOrJoinTicTacToe updateScreen={updateScreen} /> : null }
+        { currentScreen === 'game-board-tic-tac-toe' ? <GameBoardTicTacToe updateScreen={updateScreen} /> : null }
       </SafeAreaView>
     </>
   );
